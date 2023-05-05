@@ -1,40 +1,44 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import React, { useRef, useEffect } from "react";
 import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0);
+function RestreamVideo() {
+  const iframeRef = useRef(null);
+
+  const checkFullscreenWorks = () => {
+    alert("entrei");
+    const elem = document.body;
+    /* If fullscreen mode is available, show the element in fullscreen */
+    if (
+      document.fullscreenEnabled /* Standard syntax */ ||
+      document.webkitFullscreenEnabled /* Safari */ ||
+      document.msFullscreenEnabled /* IE11 */
+    ) {
+      /* Show the element in fullscreen */
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen(); /* Standard syntax */
+      } else if (elem.webkitRequestFullscreen) {
+        /* Safari */
+        elem.webkitRequestFullscreen();
+      } else if (elem.msRequestFullscreen) {
+        /* IE11 */
+        elem.msRequestFullscreen();
+      }
+    } else {
+      alert("ops I cant");
+    }
+  };
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <h2>On CodeSandbox!</h2>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR.
-        </p>
-
-        <p>
-          Tip: you can use the inspector button next to address bar to click on
-          components in the preview and open the code in the editor!
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <iframe
+        ref={iframeRef}
+        src="https://example.com"
+        title="Example iframe"
+        style={{ width: "100%", height: "300px", border: "none" }}
+      ></iframe>
+      <button onClick={checkFullscreenWorks}>Toggle Fullscreen</button>
     </div>
   );
 }
 
-export default App;
+export default RestreamVideo;
